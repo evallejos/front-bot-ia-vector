@@ -1,8 +1,6 @@
 module.exports = {
     content: ["./src/**/*.{html,ts}"],
-    theme: {
-
-    },
+    darkMode: 'class',
     plugins: [
         require('@tailwindcss/aspect-ratio'),
         require('@tailwindcss/typography'),

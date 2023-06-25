@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { IaService } from './services/ia.service';
 
 @Component({
   selector: 'app-root',
@@ -6,32 +7,28 @@ import { Component, signal } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  iaService = inject(IaService);
   title = 'front-menu-restaurants-app';
-  testing = signal<string>("");
-  markdown = `## Markdown __rulez__!
-  ---
-
-  ### Syntax highlight
-  \`\`\`typescript
-  const language = 'typescriptaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-  \`\`\`
-
-  ### Lists
-  1. Ordered list
-  2. Another bullet point
-     - Unordered list
-     - Another unordered bullet
-
-  ### Blockquote
-  > Blockquote to the max`;
-
+  markdown = signal<string>("");
+  loading = signal<boolean>(false);
   constructor() {
-    this.setTesting();
+    this.subscribeChatBot();
   }
 
-  setTesting() {
-    this.testing.set("hola")
-    console.log(this.testing())
+
+
+
+  subscribeChatBot = async () => {
+    this.iaService.getState().subscribe(({ response, loading }) => {
+      if (response && !loading) {
+        this.loading.set(true);
+        setTimeout(() => {
+          this.loading.set(false);
+          this.markdown.set(response);
+        }, 3000);
+      }
+    })
   }
 
 }
