@@ -59,13 +59,13 @@ export class HelpSupportComponent {
   queryLLM = (question: string) => {
     this.iaService.answerQuestion(question).subscribe((response) => {
       this.loading = false;
-      const { metadata:{content}, isMarkdown  } = response
-      if(!isMarkdown)
-          this.messages.push({
-            type: 'bot',
-            message: content
-          });
-      this.iaService.setState({ response: content, loading: false, isMarkdown });
+      const { metadata, isMarkdown } = response
+      if (!isMarkdown)
+        this.messages.push({
+          type: 'bot',
+          message: metadata
+        });
+      this.iaService.setState({ response: metadata, loading: false, isMarkdown });
     })
   }
 }
