@@ -20,13 +20,13 @@ export class AppComponent {
 
 
   subscribeChatBot = async () => {
-    this.iaService.getState().subscribe(({ response, loading }) => {
-      if (response && !loading) {
+    this.iaService.getState().subscribe(({ response, loading, isMarkdown }) => {
+      if (!loading && isMarkdown) {
         this.loading.set(true);
         setTimeout(() => {
           this.loading.set(false);
           this.markdown.set(response);
-        }, 3000);
+        }, 2000);
       }
     })
   }

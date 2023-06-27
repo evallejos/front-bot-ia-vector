@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export interface Chatbot {
   response: any;
   loading: boolean;
+  isMarkdown : boolean;
 }
 
 @Injectable({
@@ -12,7 +13,7 @@ export interface Chatbot {
 })
 
 export class IaService {
-  private store = new BehaviorSubject<Chatbot>({ response: null, loading: true });
+  private store = new BehaviorSubject<Chatbot>({ response: null, loading: true, isMarkdown:false });
   private _store$ = this.store.asObservable();
   private readonly API_BASE = "http://localhost:4000/api/cuentaFanClan";
   private readonly http = inject(HttpClient);
